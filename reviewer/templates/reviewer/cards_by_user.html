@@ -1,0 +1,22 @@
+{% extends 'reviewer/base.html' %}
+
+{% block title %}
+User - CardList
+{% endblock %}
+
+{% block content %}
+<!-- variable below is reached through the context override in views.UserCardList  -->
+cards of the user: {{ user }}
+
+
+<ul>
+{% for progress in users_cardlist %}
+
+  <li><a href="{% url 'reviewer:card_detail' progress.card.id %}"> {{ progress.user }}:
+{{ progress.card }}
+{{ progress.progress }}</a></li>
+
+{% endfor %}
+</ul>
+
+{% endblock %}

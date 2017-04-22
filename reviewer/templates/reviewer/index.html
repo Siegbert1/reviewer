@@ -1,0 +1,25 @@
+{% extends 'reviewer/base.html' %}
+
+{% block title %}
+Index
+{% endblock %}
+
+
+{% block content %}
+
+{% for card in stack %}
+  <ul>
+    <li>
+
+      <a href="{% url 'reviewer:card_detail' card.id %}">{{ card.id }} {{ card.title }}</a>
+        <ul> {% for user in card.progress_set.all %}
+        <li> {{user.user}}: {{user.progress}} </li>
+        {% endfor %} </ul>
+
+
+    </li>
+  </ul>
+{% endfor %}
+
+
+{% endblock %}
