@@ -1,7 +1,11 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="de">
 <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/reviewer.css' %}" />
+
     <title>streber.party: {% block title %}My amazing site{% endblock %}</title>
 </head>
 
