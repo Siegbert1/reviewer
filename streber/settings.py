@@ -44,14 +44,14 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'reviewer.User'
 
 # email backend for the sever, verfification etc.
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#needs setup with smtp service or server-mail-service
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'siegfried.sklar'
+EMAIL_HOST_PASSWORD = 'Bukka!23'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = ''
+DEFAULT_FROM_EMAIL = 'siegfried.sklar@gmail.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

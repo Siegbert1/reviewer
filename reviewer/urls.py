@@ -30,12 +30,13 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': 'reviewer:home' }, name='logout'),
 
     # for passwort reset via email (email.backend in settings.py):
-    # the passwort reset confirm view tries to render the original template from auth, so changed to passwort_reset_email1.html; needs also next view as context b/c cant find default:
-    url(r'^password_reset/$', auth_views.password_reset, {'post_reset_redirect' : 'reviewer:password_reset_done', 'email_template_name' : 'registration/password_reset_email1.html'}, name='password_reset'),
-    url(r'^password_reset_done/$', auth_views.password_reset_done, name='password_reset_done'),
-    # needs the next view as context, b/c cant find default
-    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, {'post_reset_redirect' : 'reviewer:password_reset_complete'}, name='password_reset_confirm'),
-    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+    # the passwort reset confirm view tries to render the original template from auth, so changed to passwort_reset_email1.html; needs also next view and view as context b/c it uses default:
+    url(r'^password_reset/$', auth_views.password_reset, {'post_reset_redirect' : 'reviewer:password_reset_done', 'email_template_name' : 'registration/password_reset_email1.html', 'template_name' : 'registration/password_reset_form1.html'}, name='password_reset'),
+    url(r'^password_reset_done/$', auth_views.password_reset_done, {'template_name' : 'registration/password_reset_done1.html'}, name='password_reset_done'),
+    # needs the next view as sepcially named context, b/c uses default
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, {'post_reset_redirect' : 'reviewer:password_reset_complete', 'template_name' : 'registration/password_reset_complete1.html'}, name='password_reset_confirm'),
+        # tries to render default, so renamed
+    url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name' : 'registration/password_reset_complete1.html'}, name='password_reset_complete'),
 
 
 
