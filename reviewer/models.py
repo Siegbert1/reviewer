@@ -1,4 +1,4 @@
-from django.db import models
+
 
 # the reviewer should contain models, which simulate study-cards
 # the cards have a Question/Answer field

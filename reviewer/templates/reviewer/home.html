@@ -7,7 +7,12 @@ home
 
 
 {% block content %}
-biatsch
+<p> home </p>
+{% if user.is_authenticated %}
+<h1>Ena du süße Krabbe :)</h1>
+{% endif %}
+
+
 <!--- here should go some study-tree --->
 
 <!--- something like
