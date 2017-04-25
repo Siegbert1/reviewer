@@ -1,7 +1,49 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Card, User, Progress
 from django.views import generic
+
+#for signup/ login
+from django.contrib.auth import login, authenticate
 # Create your views here.
+
+# home/base-page ( should later identify User/Anonymous and show study-tree accordingly)
+
+def home(request):
+    stack = Card.objects.all()
+    context = {'stack':stack}
+    return render (request, 'reviewer/home.html', context)
+
+
+
+# because User is custom (needed for signup form)
+from django.contrib.auth.forms import UserCreationForm
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields
+
+# for signup of the user
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('reviewer:home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'reviewer/signup.html', {'form': form})
+
+
+
+
+
+
+
 
 #def index(request):
 #    stack = Card.objects.all()

@@ -43,6 +43,15 @@ INSTALLED_APPS = [
 #Option for the special User-model in reviewer/models.py
 AUTH_USER_MODEL = 'reviewer.User'
 
+# email backend for the sever, verfification etc.
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'siegfried.sklar'
+EMAIL_HOST_PASSWORD = 'Bukka!23'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'siegfried.sklar@gmail.com'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +62,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# for the login
+LOGIN_REDIRECT_URL = 'reviewer:home'
 
 ROOT_URLCONF = 'streber.urls'
 
@@ -110,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
