@@ -8,9 +8,9 @@ home
 
 {% block content %}
 <p> home </p>
-{% if user.is_authenticated %}
+{% ifequal request.user.username 'Ena' %}
 <h1>Ena du süße Krabbe :)</h1>
-{% endif %}
+{% endifequal %}
 
 
 <!--- here should go some study-tree --->

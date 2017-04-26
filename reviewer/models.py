@@ -8,14 +8,15 @@
 
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, User
 from django.db.models import signals
+from django.dispatch import receiver
 
 
 
 # for eventual changes to User
 class User(AbstractUser):
-    pass
+    email_confirmed = models.BooleanField(default=False)
 
 class Card(models.Model):
     title = models.CharField(max_length=50)

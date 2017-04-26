@@ -36,7 +36,8 @@ urlpatterns = [
         # tries to render default, so renamed
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name' : 'registration/password_reset_complete1.html'}, name='password_reset_complete'),
 
-
+    url(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
 
 
 
