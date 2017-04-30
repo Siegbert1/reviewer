@@ -1,77 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.sites.shortcuts import get_current_site
-from .models import Card, User, Progress
+from .models import Card, User, Progress, Category
 from django.views import generic
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from .forms import SignUpForm
-from .tokens import account_activation_token
-
-#for signup/ login
-from django.contrib.auth import login, authenticate
-# Create your views here.
-
-from django.contrib.auth import get_user_model
-User = get_user_model()
+#from .forms import ProgressForm
+# if something goes wrong with signup/login, it probably should get reincluded here
+from . import views_registration
+from .views_registration import signup, account_activation_sent, activate, change_password
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 # home/base-page ( should later identify User/Anonymous and show study-tree accordingly)
 
 def home(request):
     stack = Card.objects.all()
-    context = {'stack':stack}
+    straf_cats = Category.objects.filter(area='SR')
+    oeff_cats = Category.objects.filter(area='OR')
+    zr_cats = Category.objects.filter(area='ZR')
+    context = {'stack':stack, 'straf_cats':straf_cats, 'oeff_cats':oeff_cats, 'zr_cats':zr_cats}
     return render (request, 'reviewer/home.html', context)
-
-
-
-# because User is custom (needed for signup form)
-from django.contrib.auth.forms import UserCreationForm
-class CustomUserCreationForm(UserCreationForm):
-
-    class Meta(UserCreationForm.Meta):
-        model = get_user_model()
-        fields = UserCreationForm.Meta.fields
-
-# for signup of the user
-def signup(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            subject = 'Activate Your MySite Account'
-            message = render_to_string('registration/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message)
-            return redirect('reviewer:account_activation_sent')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
-
-def account_activation_sent(request):
-    return render(request, 'registration/account_activation_sent.html')
-
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.email_confirmed = True
-        user.save()
-        login(request, user)
-        return redirect('reviewer:home')
-    else:
-        return render(request, 'registration/account_activation_invalid.html')
 
 
 
@@ -119,4 +64,104 @@ class UserProfile(generic.DetailView):
     slug_field = 'username'
     template_name = 'reviewer/user_profile.html'
 
-# view for the actual
+# view for the actual studying
+
+
+def study_start(request, name):
+    #flush old session
+    try:
+        del request.session['study_list']
+    except:
+        pass
+    # Card objects are retrieved trough chosing category on template
+    # first card of the object-list is poped, to be immediatelly passed to study
+    if name == 'due':  # the cards which are due to study
+        cards_to_study = Card.objects.filter(progress__user=request.user, progress__nexttime__lte=timezone.now()) # __lte stands for less than/equal to following
+    else:
+        cards_to_study = Card.objects.filter(category__name=name) # could be used to get different data set through slug or similar
+    # Queryset.pop is not allowed, so workaround:
+    first_study_card = cards_to_study[0]
+    cards_to_study = cards_to_study[1:]
+    study_list = []
+    for card in cards_to_study:
+        #check if card is due to study
+        #card_progress = Progress.objects.get(user=request.user, card=card)
+        #if card_progress.nexttime <= datetime.now():
+        study_list.append(card.pk)
+        #else:
+            #pass
+    request.session['study_list'] = study_list
+    # insert mechanism to only get the cards, which should be studied from the stack in regards to "progress_lasttime"
+
+
+    return redirect('reviewer:studying', first_study_card.pk)    # redirect the list to studying with the pl for the first card to study
+
+
+
+def studying(request, pk):
+    if pk == '0':
+        return redirect('reviewer:studying_finished')
+    else:
+        #get the Card object with the passed pk:
+        now_study_card = get_object_or_404(Card, pk=pk)
+        # after playing in (else), progress is processed and the next card is drawn
+        progress = Progress.objects.get(user=request.user, card=now_study_card)
+
+        #get the list containing the pk's of the cards you want to study out of sessions:
+        # next_card_pk is here not really necessary, only in buttons().
+        study_list = request.session.get('study_list')
+        if len(study_list) == 0:
+            next_card_pk = 0
+        else:
+            next_card_pk = study_list[0]
+
+
+        context = {'now_study_card': now_study_card, 'next_card_pk':next_card_pk}
+        return render (request, 'reviewer/studying.html' , context)
+
+def button(request, button, pk):
+    # this function gets the studyied card from the template, changes the according progress depending on
+    # which button was pressed an redirects to the studying-view with the next card.pk to study
+    card = Card.objects.get(pk=pk)
+    progress = Progress.objects.get(user=request.user, card=card)
+    study_list = request.session.get('study_list')
+    if button == '1': # button "not known", resets card-progress
+
+        progress.nexttime = datetime.now() # or timezone.now(), doesnt matter in this case
+        progress.progress = 0
+        study_list.append(card.pk)
+    elif button == '2': # button "known", starts "short-term"-studying till level 3, then long-term
+        if progress.progress < 2: # when card was never played, not known or in "short-term"
+            progress.nexttime = timezone.now() + timedelta(minutes=5)
+        elif progress.progress == 2: # progressing to "long-term"
+            progress.nexttime = timezone.now() + timedelta(days=1)
+        elif progress.nexttime >= progress.lasttime + timedelta(days=45): #longterm upper border
+            progress.nexttime = timezone.now() + timedelta(days=45)
+        else: #long-term
+            progress.nexttime = timezone.now() + 2*(timezone.now() - progress.lasttime) #adds the timedifference from lasttime studyied on top of now() times x
+        progress.progress = progress.progress +1
+
+    elif button == '3': # button "easy"
+        if progress.progress < 2:
+            progress.nexttime = timezone.now() + timedelta(days=1)
+        elif progress.nexttime >= progress.lasttime + timedelta(days=45):# upper-border for study-intervall
+            progress.nexttime = timezone.now() + timedelta(days=45)
+        else:
+            progress.nexttime = timezone.now() + 3*(timezone.now() - progress.lasttime)
+        progress.progress = progress.progress +2
+
+    else:
+        pass
+
+    progress.save()
+    #study_list = request.session.get('study_list'), already called
+    if len(study_list) == 0:
+        next_card_pk = 0
+    else:
+        next_card_pk = study_list.pop(0)
+        request.session['study_list']= study_list
+    return redirect('reviewer:studying', pk=next_card_pk)
+
+def studying_finished(request):
+    context = {}
+    return render (request, 'reviewer/studying_finished.html', context)

@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+
+# needs to install:
+# myvenv for python3.6, django 1.11, python-decouple
+
 # decouple the secret data (like secret key) from the project into a seperate file, so it is not visible on github
+# needs to install 'pip install python-decouple' !!!!!!!!!
 from decouple import config, Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

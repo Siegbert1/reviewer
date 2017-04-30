@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/reviewer.css' %}" />
 
+
     <title>streber.party: {% block title %}My amazing site{% endblock %}</title>
 </head>
 
@@ -31,6 +32,11 @@
     <div id="content">
         {% block content %}{% endblock %}
     </div>
-</body>
 
+
+    <script src={% static "js/jquery-3.2.1.min.js" %}></script>
+    <script src={% static "js/bootstrap.min.js" %}></script>
+    {% block javascript %}
+    {% endblock %}
+</body>
 </html>

@@ -1,0 +1,24 @@
+{% extends 'reviewer/base.html' %}
+
+
+{% block content %}
+<p>studying:</p>
+
+<p>now: {{ now_study_card.pk }} {{ now_study_card.front }}</p>
+<p> {{ now_study_card.back }} </p>
+
+<p>next: {{ next_card_pk }}</p>
+
+
+<p><a href={% url 'reviewer:button' button=1 pk=now_study_card.pk %} type="button" class="btn btn-danger"> Nicht gewusst </a>
+<a href={% url 'reviewer:button' button=2 pk=now_study_card.pk %} type="button" class="btn btn-warning"> Gewusst </a>
+<a href={% url 'reviewer:button' button=3 pk=now_study_card.pk %} type="button" class="btn btn-success"> Einfach </a></p>
+
+
+
+
+{% endblock %}
+
+
+{% block javascript %}
+{% endblock %}

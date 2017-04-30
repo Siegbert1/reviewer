@@ -7,6 +7,6 @@ Profil
 {% block content %}
 
 {{ user.username }}
-
+<a href={% url 'reviewer:change_password' %}>pw change </a>
 
 {% endblock %}

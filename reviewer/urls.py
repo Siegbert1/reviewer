@@ -8,7 +8,7 @@ urlpatterns = [
     # base-page
     url(r'^$', views.home, name='home'),
     # index with all the cards and the user-specific study-progress
-    url(r'^index$', views.IndexView.as_view(), name='index'),
+    url(r'^index/$', views.IndexView.as_view(), name='index'),
     # detail view of each card
     url(r'^card/(?P<pk>[0-9]+)/$', views.CardDetail.as_view(), name='card_detail'),
     # List of all the Cards of one user
@@ -18,10 +18,37 @@ urlpatterns = [
     url(r'^id/(?P<pk>[0-9]+)/$', views.UserProfile.as_view(), name='user_profile_id'),
 
 
-    # view for the actual studying
-    #url(r'^$', views.)
-    # for sign up
+    # views for the actual studying
+    url(r'^study_start/(?P<name>.+)/$', views.study_start, name='study_start'),
+    url(r'^studying/(?P<pk>[0-9]+)/$', views.studying, name='studying'),
+    url(r'^studying_finished/$', views.studying_finished, name='studying_finished'),
+
+    url(r'^button/(?P<button>[0-9])/(?P<pk>[0-9]+)/$', views.button, name='button'),
+
+
+    #url(r'^update_progress/(?P<pk>[0-9]+)/$', views.update_progress, name='update_progress'),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Account related urls and included views
+
+    # for sign up with email-verification
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
+
     # for login default is in 'registration/login.html'
     url(r'^login/$', auth_views.login, name='login'),
     # for logout, needs context so it doesn't go to 'registration/logout.html'
@@ -36,9 +63,8 @@ urlpatterns = [
         # tries to render default, so renamed
     url(r'^reset/done/$', auth_views.password_reset_complete, {'template_name' : 'registration/password_reset_complete1.html'}, name='password_reset_complete'),
 
-    url(r'^account_activation_sent/$', views.account_activation_sent, name='account_activation_sent'),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
-
+    #change password
+    url(r'^password/$', views.change_password, name='change_password'),
 
 
 

@@ -11,18 +11,37 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, User
 from django.db.models import signals
 from django.dispatch import receiver
-
+from django.contrib import admin
 
 
 # for eventual changes to User
 class User(AbstractUser):
     email_confirmed = models.BooleanField(default=False)
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    STRAF = 'SR'
+    OEFF = 'OR'
+    ZIVR = 'ZR'
+    AREA_CHOICES = (
+        (STRAF, 'Strafrecht'),
+        (OEFF, 'Oeffentliches Recht'),
+        (ZIVR, 'Zivilrecht'),
+    )
+    area = models.CharField(
+        max_length=2,
+        choices=AREA_CHOICES,
+        default=STRAF,
+    )
+    def __str__(self):
+        return self.name
+
 class Card(models.Model):
     title = models.CharField(max_length=50)
-    category = models.CharField(max_length=50)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     front = models.TextField()
     back = models.TextField()
+    explanation = models.TextField(blank=True, null=True)
     #conection between User, Cards and the specific Progress in one SQL table(?)
     users = models.ManyToManyField(User, through='Progress')
 
@@ -32,16 +51,20 @@ class Card(models.Model):
 
 
 
+
 # extends the User Model with the Card Progress
 class Progress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     progress = models.IntegerField(default=0, null=True)
-    lasttime = models.DateField(blank=True, null=True)
-    nexttime = models.DateField(blank=True, null=True)
+    lasttime = models.DateTimeField(auto_now=True, blank=True, null=True)
+    nexttime = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return str(self.user) + str(': ') + str(self.card)
+
+
+
 
 
 #autocreation of the Progress for every Card if a User is created
@@ -64,20 +87,3 @@ def create_progress_new_card(sender, instance, created, **kwargs):
 
 signals.post_save.connect(create_progress_new_card, sender=Card, weak=False,
                           dispatch_uid='models.create_progress_new_card')
-
-
-
-
-
-
-
-# old try
-#class UserProgress(models.Model):
-    #card = models.ForeignKey(Card, on_delete=models.CASCADE)
-    #user = models.CharField(max_length=50)
-    #progress = models.IntegerField(default=0, null=True)
-    #lasttime = models.DateField(blank=True, null=True)
-    #nexttime = models.DateField(blank=True, null=True)
-
-    #def __str__(self):
-        #return self.user

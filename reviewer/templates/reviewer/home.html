@@ -1,6 +1,6 @@
 {% extends 'reviewer/base.html' %}
 
-{% block header %}
+{% block title %}
 home
 {% endblock %}
 
@@ -13,9 +13,68 @@ home
 {% endifequal %}
 
 
+
+{% if user.is_authenticated %}
+
+<h1> Fällige Karten </h1>
+<p><a href={% url 'reviewer:study_start' name='due' %}> Study! </a></p>
+
+<h1> Strafrecht </h1>
+{% for category in straf_cats %}
+<p>{{ category.name }}</p>
+<p><a href={% url 'reviewer:study_start' name=category.name %}> Study! </a></p>
+{% endfor %}
+
+
+
+<h1> Öffentliches Recht </h1>
+{% for category in oeff_cats %}
+<p>{{ category.name }}</p>
+{% endfor %}
+
+
+
+<h1> Zivilrecht </h1>
+{% for category in zr_cats %}
+<p>{{ category.name }}</p>
+{% endfor %}
+
+
+
+
+
+
+{% else %} <!--- same as 'if not authenticated' --->
+
+<p> Probier es aus! </p>
+{% with straf_cats.0 as straf_first and oeff_cats.0 as oeff_first and zr_cats.0 as zr_first %}
+
+<h1> Strafrecht </h1>
+<p>{{ straf_first.name }}</p>
+
+
+<h1> Öffentliches Recht </h1>
+<p>{{ oeff_first.name }}</p>
+
+<h1> Zivilrecht </h1>
+<p>{{ zr_first.name }}</p>
+{% endwith %}
+
+{% endif %}
+
 <!--- here should go some study-tree --->
 
 <!--- something like
+
+<p>Strafrecht</p>
+<ul>
+<li><a href=''> Strafrecht AT </a></li>
+<li> Strafrecht BT 1 </li>
+</ul>
+
+
+<p>Zivilrecht</p>
+<p>Öffentliches Recht</p>
 {% if user.is_authenticated %}
 {% for cat in card.category %}
 
@@ -23,6 +82,17 @@ home
 
 not auth
 first category of each subject
+
+
 {% endif %}
+
+
 --->
+
+
+
+
+
+
+
 {% endblock %}
