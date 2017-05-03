@@ -25,12 +25,12 @@ Streber.Party
 <div class="row">
 <div class="col-sm-12 text-center"><h1> Heute fällige Karten: {{ cards_due }} </h1>
 
-<div class="col-sm-12 text-center"><p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='all' %}> Alle </a></p></div>
+<div class="col-sm-12 text-center"><p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='all' %}> Alle lernen </a></p></div>
 
 <div class="col-sm-12 text-center boxes">
-<p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='sr' %}> Study SR! </a>
-<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='or' %}> Study OR! </a>
-<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='zr' %}> Study ZR! </a></p></div>
+<p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='sr' %}> Strafrecht lernen </a>
+<a class="btn btn-danger" role="button" href={% url 'reviewer:study_start' name='due' setting='or' %}> Öff-recht lernen </a>
+<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='zr' %}> Zivilrecht lernen </a></p></div>
 
 </div>
 </div>
