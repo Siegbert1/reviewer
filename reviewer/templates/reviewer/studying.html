@@ -1,24 +1,75 @@
 {% extends 'reviewer/base.html' %}
 
+{% block title %}
+Büffeln
+{% endblock %}
+
+{% block navbar_orientation %}
+<li><a href="{% url 'reviewer:home' %}#section1">Strafrecht</a></li>
+<li><a href="{% url 'reviewer:home' %}#section2">Öffentliches Recht</a></li>
+<li><a href="{% url 'reviewer:home' %}#section3">Zivilrecht</a></li>
+{% endblock %}
 
 {% block content %}
-<p>studying:</p>
+<p>Fortschritt:</p>
 
-<p>now: {{ now_study_card.pk }} {{ now_study_card.front }}</p>
-<p> {{ now_study_card.back }} </p>
+<div class="row">
+<div class="col-sm-12">
+<div class="container">
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ studying_progress_percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ old_stud_prog }}%" >
+      {{ studying_progress_percent }}%
+    </div>
+  </div>
+</div>
+</div>
+</div>
 
-<p>next: {{ next_card_pk }}</p>
+<div class="row">
+<div class="col-sm-12 text-center"><p>{{ now_study_card.title }}</p></div>
+{% autoescape off %}
+<div class="col-sm-12 text-center question"><p>{{ now_study_card.front }} </p></div>
+{% endautoescape %}
 
 
-<p><a href={% url 'reviewer:button' button=1 pk=now_study_card.pk %} type="button" class="btn btn-danger"> Nicht gewusst </a>
-<a href={% url 'reviewer:button' button=2 pk=now_study_card.pk %} type="button" class="btn btn-warning"> Gewusst </a>
-<a href={% url 'reviewer:button' button=3 pk=now_study_card.pk %} type="button" class="btn btn-success"> Einfach </a></p>
+<div class="col-sm-12 text-center"><button type="button" id="collbut" class="btn btn-outline-primary btn-lg">Antwort</button></div>
+</div>
+<div class="collapse">
+<div class="row">
+{% autoescape off %}
+<div class="col-sm-12 text-center"><p> {{ now_study_card.back }} </p></div>
+{% endautoescape %}
+<div class="col-sm-12 text-center"><p>next: {{ next_card_pk }}</p></div>
+</div>
 
+<div class="row">
 
+<div class="col-sm-12 text-center"><p>
+<a href={% url 'reviewer:button' button=1 pk=now_study_card.pk %} type="button" class="btn btn-danger btn-lg buttons"> Nicht gewusst </a>
+<a href={% url 'reviewer:button' button=2 pk=now_study_card.pk %} type="button" class="btn btn-warning btn-lg buttons"> Schwer </a>
+<a href={% url 'reviewer:button' button=3 pk=now_study_card.pk %} type="button" class="btn btn-info btn-lg buttons"> Gewusst </a>
+<a href={% url 'reviewer:button' button=4 pk=now_study_card.pk %} type="button" class="btn btn-success btn-lg buttons"> Einfach </a></p></div>
 
-
+<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:studying_finished' %} type="button" class="btn btn-danger"> Abbruch! </a></p></div>
+</div>
+</div>
 {% endblock %}
 
 
 {% block javascript %}
+{% comment %}
+<!--- following js is for the function of the progress-bar --->
+{% endcomment %}
+<script type="text/javascript">
+   $(document).ready(function() {
+      $('.progress .progress-bar').css("width",
+                function() {
+                    return $(this).attr("aria-valuenow") + "%";
+                }
+        )
+        $("#collbut").click(function(){
+          $(".collapse").collapse('show');
+      });
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,94 @@
+
+body {
+    background-color: #EEEEEE;
+    font: 400 15px Montserrat, sans-serif;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    overflow-x:hidden;
+}
+ #navbar_brand {
+   background-color: black;
+   border-radius: 2px;
+ }
+
+.progress-bar {
+   transition-duration: 1.5s;
+}
+
+.boxes {
+    background-color: lightgrey;
+    padding: 2em;
+    border-radius: 25px;
+
+}
+
+.question {
+  background-color: lightgrey;
+  padding: 1em;
+  border-radius: 25px;
+}
+
+.buttons {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.cat_name{
+  padding-top: 4em;
+  padding-bottom: 1em;
+}
+
+
+h1 {
+  padding-top: 3em;
+  padding-bottom: 0.5em;
+}
+
+
+#footer {
+  padding: 2em;
+}
+
+.footer {
+  float: right;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em;
+  background-color: lightgrey;
+}
+
+ .slideanim {visibility:hidden;}
+ .slide {
+     /* The name of the animation */
+     animation-name: slide;
+     -webkit-animation-name: slide;
+     /* The duration of the animation */
+     animation-duration: 1s;
+     -webkit-animation-duration: 1s;
+     /* Make the element visible */
+     visibility: visible;
+ }
+
+ /* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+ @keyframes slide {
+     0% {
+         opacity: 0;
+         transform: translateY(70%);
+     }
+     100% {
+         opacity: 1;
+         transform: translateY(0%);
+     }
+ }
+ @-webkit-keyframes slide {
+     0% {
+         opacity: 0;
+         -webkit-transform: translateY(70%);
+     }
+     100% {
+         opacity: 1;
+         -webkit-transform: translateY(0%);
+     }
+ }

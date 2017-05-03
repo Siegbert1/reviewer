@@ -1,20 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
-{% load staticfiles %}
+
 <html lang="de">
 <head>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'css/reviewer.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'reviewer/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'reviewer/css/bootstrap-theme.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'reviewer/css/reviewer.css' %}"/>
 
 
-    <title>streber.party: {% block title %}My amazing site{% endblock %}</title>
+
+    <title>{% block title %}SP{% endblock %}</title>
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
+        <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+
+                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+              <a class="navbar-brand" id="navbar_brand" href={% url 'reviewer:home' %}>Streber.party</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav" id="Navbar">
+{% block navbar_orientation %}
             <li><a href={% url "reviewer:home" %}>Home</a></li>
+            <li><a href="{% url 'reviewer:home' %}#section1">Strafrecht</a></li>
+            <li><a href="{% url 'reviewer:home' %}#section2">Öffentliches Recht</a></li>
+            <li><a href="{% url 'reviewer:home' %}#section3">Zivilrecht</a></li>
+{% endblock %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li><a href={% url "reviewer:user_profile_id" pk=request.user.id %}>Profile</a></li>
             <li><a href={% url 'reviewer:logout' %}> Log out</a></li>
@@ -24,18 +47,30 @@
             <li><a href={% url 'reviewer:signup' %}> Sign up</a></li>
             <li><a href={% url 'reviewer:login' %}> Log in</a></li>
             {% endif %}
-
         </ul>
-        {% endblock %}
+      </div>
     </div>
+        </nav>
 
-    <div id="content">
+
+    <div class= "text-center">
+
         {% block content %}{% endblock %}
+
     </div>
 
 
-    <script src={% static "js/jquery-3.2.1.min.js" %}></script>
-    <script src={% static "js/bootstrap.min.js" %}></script>
+
+<div class="navbar navbar-fixed-bottom">
+  <a href='#' class='footer'>Impressum</a>
+  <a href='#' class='footer'>Über uns</a>
+  <a href='#' class='footer'>Kontakt</a>
+</div>
+
+
+
+    <script src={% static "reviewer/js/jquery-3.2.1.min.js" %}></script>
+    <script src={% static "reviewer/js/bootstrap.min.js" %}></script>
     {% block javascript %}
     {% endblock %}
 </body>

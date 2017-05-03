@@ -1,0 +1,6 @@
+could be included:
+
+- user making cards
+- wysiwyg editor for admin/user
+- user profile levels and characters (like in these online games)
+- 

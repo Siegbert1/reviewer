@@ -19,7 +19,7 @@ urlpatterns = [
 
 
     # views for the actual studying
-    url(r'^study_start/(?P<name>.+)/$', views.study_start, name='study_start'),
+    url(r'^study_start/(?P<name>.+)/(?P<setting>[\w-]+)/$', views.study_start, name='study_start'),
     url(r'^studying/(?P<pk>[0-9]+)/$', views.studying, name='studying'),
     url(r'^studying_finished/$', views.studying_finished, name='studying_finished'),
 

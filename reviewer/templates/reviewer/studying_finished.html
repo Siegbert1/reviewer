@@ -3,8 +3,38 @@
 
 
 {% block content %}
+<p>Fortschritt:</p>
+<div class="container">
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ studying_progress_percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ old_stud_prog }}%" >
+      {{ studying_progress_percent }}%
+    </div>
+  </div>
+</div>
+
 
 <p> Super du Arschloch! Fertig! </p>
+<p> Gewusst: {{known_cards}} von {{studied_cards}} Karten! </p>
+<p> Nicht gewusst {{unknown_cards}} Karten! </p>
+bvraaaaain
+{% if studied_cards == 0 %}
+<p>There was nothing to study!</p>
+{% endif %}
+
+{% endblock %}
 
 
+{% block javascript %}
+{% comment %}
+<!--- following js is for the function of the progress-bar --->
+{% endcomment %}
+<script type="text/javascript">
+   $(document).ready(function() {
+      $('.progress .progress-bar').css("width",
+                function() {
+                    return $(this).attr("aria-valuenow") + "%";
+                }
+        )
+    });
+</script>
 {% endblock %}

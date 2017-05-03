@@ -1,13 +1,19 @@
 {% extends 'reviewer/base.html' %}
 
 {% block title %}
-home
+Streber.Party
+{% endblock %}
+
+{% block navbar_orientation %}
+<li><a href="#home">Home</a></li>
+<li><a href="#section1">Strafrecht</a></li>
+<li><a href="#section2">Öffentliches Recht</a></li>
+<li><a href="#section3">Zivilrecht</a></li>
 {% endblock %}
 
 
-
 {% block content %}
-<p> home </p>
+
 {% ifequal request.user.username 'Ena' %}
 <h1>Ena du süße Krabbe :)</h1>
 {% endifequal %}
@@ -15,84 +21,172 @@ home
 
 
 {% if user.is_authenticated %}
+<div class="container" id="home">
+<div class="row">
+<div class="col-sm-12 text-center"><h1> Heute fällige Karten: {{ cards_due }} </h1>
 
-<h1> Fällige Karten </h1>
-<p><a href={% url 'reviewer:study_start' name='due' %}> Study! </a></p>
+<div class="col-sm-12 text-center"><p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='all' %}> Alle </a></p></div>
 
-<h1> Strafrecht </h1>
-{% for category in straf_cats %}
-<p>{{ category.name }}</p>
-<p><a href={% url 'reviewer:study_start' name=category.name %}> Study! </a></p>
-{% endfor %}
+<div class="col-sm-12 text-center boxes">
+<p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='sr' %}> Study SR! </a>
+<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='or' %}> Study OR! </a>
+<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='zr' %}> Study ZR! </a></p></div>
+
+</div>
+</div>
+</div>
+
+<div class="container" id="section1">
+<div class="row">
+  <div class="col-sm-12 text-center "><h1> Strafrecht </h1></div>
+</div>
+<div class="row">
+  {% for category in straf_cats %}
+  <div class="col-sm-6 slideanim">
+
+    <p class="cat_name"><strong>{{ category.name }}</strong></p>
+    <div class="boxes">
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Lernen </a></p>
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Alle lernen </a></p>
+  </div>
+</div>
+  {% endfor %}
+</div>
+</div>
 
 
 
-<h1> Öffentliches Recht </h1>
-{% for category in oeff_cats %}
-<p>{{ category.name }}</p>
-{% endfor %}
+
+<div class="container" id="section2">
+<div class="row">
+    <div class="col-sm-12 text-center"><h1> Öffentliches Recht </h1></div>
+  </div>
+  <div class="row">
+  {% for category in oeff_cats %}
+
+    <div class="col-sm-6 slideanim">
+    <p class="cat_name"><strong>{{ category.name }}</strong></p>
+    <div class="boxes">
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Study due cards! </a></p>
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Study all! </a></p>
+
+  </div>
+</div>
+
+  {% endfor %}
+</div>
+</div>
 
 
+<div class="container" id="section3">
+<div class="row">
+    <div class="col-sm-12 text-center"><h1> Zivilrecht </h1>
+    </div>
+  <div class="row">
+  {% for category in zr_cats %}
+  <div class="col-sm-6 text-center slideanim">
+    <p class="cat_name"><strong>{{ category.name }}</strong></p>
+    <div class="boxes">
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Study due cards! </a></p>
+    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Study all! </a></p>
 
-<h1> Zivilrecht </h1>
-{% for category in zr_cats %}
-<p>{{ category.name }}</p>
-{% endfor %}
-
-
+  </div>
+</div>
+  {% endfor %}
+</div>
+</div>
 
 
 
 
 {% else %} <!--- same as 'if not authenticated' --->
 
-<p> Probier es aus! </p>
+<div class="row" id="home">
+<div class="col-sm-12 text-center"><p> Probier es aus! </p>
+<p> Du Lurch! </p>
+</div>
+</div>
+
+
 {% with straf_cats.0 as straf_first and oeff_cats.0 as oeff_first and zr_cats.0 as zr_first %}
-
-<h1> Strafrecht </h1>
-<p>{{ straf_first.name }}</p>
-
-
-<h1> Öffentliches Recht </h1>
-<p>{{ oeff_first.name }}</p>
-
-<h1> Zivilrecht </h1>
-<p>{{ zr_first.name }}</p>
+<div class="row" id="section1">
+<div class="col-sm-12 text-center"><h1> Strafrecht </h1></div>
+</div></div>
+<div class="row">
+<div class="col-sm-12 text-center"><p>{{ straf_first.name }}</p></div>
+</div>
+<div class="row">
+<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=straf_first.name setting='all' %}> Study! </a></p></div>
+</div>
+<div class="row" id="section2">
+<div class="col-sm-12 text-center"><h1> Öffentliches Recht </h1>
+</div></div>
+<div class="row">
+<div class="col-sm-12 text-center"><p>{{ oeff_first.name }}</p>
+</div></div>
+<div class="row">
+<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=oeff_first.name setting='all' %}> Study! </a></p>
+</div></div>
+<div class="row" id="section3">
+<div class="col-sm-12 text-center"><h1> Zivilrecht </h1>
+</div></div>
+<div class="row">
+<div class="col-sm-12 text-center"><p>{{ zr_first.name }}</p>
+  </div></div>
+<div class="row">
+<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=zr_first.name setting='all' %}> Study! </a></p>
+  </div></div>
 {% endwith %}
-
-{% endif %}
-
-<!--- here should go some study-tree --->
-
-<!--- something like
-
-<p>Strafrecht</p>
-<ul>
-<li><a href=''> Strafrecht AT </a></li>
-<li> Strafrecht BT 1 </li>
-</ul>
-
-
-<p>Zivilrecht</p>
-<p>Öffentliches Recht</p>
-{% if user.is_authenticated %}
-{% for cat in card.category %}
-
-{% endfor %}
-
-not auth
-first category of each subject
+</div>
 
 
 {% endif %}
 
 
---->
 
 
 
 
 
 
+{% endblock %}
 
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+      if (pos < winTop + 600) {
+        $(this).addClass("slide");
+      }
+    });
+  });
+// Add smooth scrolling to all links in navbar + footer link
+ $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+  // Make sure this.hash has a value before overriding default behavior
+ if (this.hash !== "") {
+
+   // Prevent default anchor click behavior
+   event.preventDefault();
+
+   // Store hash
+   var hash = this.hash;
+
+   // Using jQuery's animate() method to add smooth page scroll
+   // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+   $('html, body').animate({
+     scrollTop: $(hash).offset().top
+   }, 900, function(){
+
+     // Add hash (#) to URL when done scrolling (default click behavior)
+     window.location.hash = hash;
+     });
+   } // End if
+ });
+ })
+</script>
 {% endblock %}

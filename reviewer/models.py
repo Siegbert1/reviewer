@@ -58,7 +58,7 @@ class Progress(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     progress = models.IntegerField(default=0, null=True)
     lasttime = models.DateTimeField(auto_now=True, blank=True, null=True)
-    nexttime = models.DateTimeField(blank=True, null=True)
+    nexttime = models.DateTimeField(default=timezone.now(), blank=True, null=True)
 
     def __str__(self):
         return str(self.user) + str(': ') + str(self.card)
