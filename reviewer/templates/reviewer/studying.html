@@ -4,11 +4,7 @@
 Büffeln
 {% endblock %}
 
-{% block navbar_orientation %}
-<li><a href="{% url 'reviewer:home' %}#section1">Strafrecht</a></li>
-<li><a href="{% url 'reviewer:home' %}#section2">Öffentliches Recht</a></li>
-<li><a href="{% url 'reviewer:home' %}#section3">Zivilrecht</a></li>
-{% endblock %}
+
 
 {% block content %}
 <p>Fortschritt:</p>
@@ -27,32 +23,42 @@ Büffeln
 
 <div class="row">
 <div class="col-sm-12 text-center"><p>{{ now_study_card.title }}</p></div>
+</div>
+<div class="row">
 {% autoescape off %}
 <div class="col-sm-12 text-center question"><p>{{ now_study_card.front }} </p></div>
 {% endautoescape %}
-
-
-<div class="col-sm-12 text-center"><button type="button" id="collbut" class="btn btn-outline-primary btn-lg">Antwort</button></div>
 </div>
-<div class="collapse">
-<div class="row">
+<p> </p>
+<div class="col-sm-12 text-center"><button id="collapse_button" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAnswer" aria-expanded="false" aria-controls="collapseAnswer">
+    Antwort
+  </button>
+</div>
+
+<div class="collapse" id="collapseAnswer">
+
 {% autoescape off %}
-<div class="col-sm-12 text-center"><p> {{ now_study_card.back }} </p></div>
+<p> {{ now_study_card.back }} </p>
 {% endautoescape %}
-<div class="col-sm-12 text-center"><p>next: {{ next_card_pk }}</p></div>
-</div>
+<!--- <p>next: {{ next_card_pk }}</p> --->
 
-<div class="row">
+
+<div class="row justify-content-center">
 
 <div class="col-sm-12 text-center"><p>
-<a href={% url 'reviewer:button' button=1 pk=now_study_card.pk %} type="button" class="btn btn-danger btn-lg buttons"> Nicht gewusst </a>
-<a href={% url 'reviewer:button' button=2 pk=now_study_card.pk %} type="button" class="btn btn-warning btn-lg buttons"> Schwer </a>
-<a href={% url 'reviewer:button' button=3 pk=now_study_card.pk %} type="button" class="btn btn-info btn-lg buttons"> Gewusst </a>
-<a href={% url 'reviewer:button' button=4 pk=now_study_card.pk %} type="button" class="btn btn-success btn-lg buttons"> Einfach </a></p></div>
+<a href={% url 'reviewer:button' button=1 pk=now_study_card.pk %} role="button" class="btn btn-danger btn-lg"> Nicht gewusst </a>
+<a href={% url 'reviewer:button' button=2 pk=now_study_card.pk %} role="button" class="btn btn-warning btn-lg"> Schwer </a>
+<a href={% url 'reviewer:button' button=3 pk=now_study_card.pk %} role="button" class="btn btn-info btn-lg"> Gewusst </a>
+<a href={% url 'reviewer:button' button=4 pk=now_study_card.pk %} role="button" class="btn btn-success btn-lg"> Einfach </a></p></div>
+</div>
+</div>
+<p> </p>
 
-<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:studying_finished' %} type="button" class="btn btn-danger"> Abbruch! </a></p></div>
+<div class="row justify-content-center">
+<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:studying_finished' %} role="button" class="btn btn-outline-danger btn-sm"> Abbruch! </a></p></div>
 </div>
-</div>
+
+
 {% endblock %}
 
 
@@ -66,9 +72,10 @@ Büffeln
                 function() {
                     return $(this).attr("aria-valuenow") + "%";
                 }
-        )
-        $("#collbut").click(function(){
-          $(".collapse").collapse('show');
+        );
+
+      $('#collapse_button').click(function(){
+        $(this).hide();
       });
     });
 </script>

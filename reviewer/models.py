@@ -33,6 +33,7 @@ class Category(models.Model):
         choices=AREA_CHOICES,
         default=STRAF,
     )
+    containing_cards = models.IntegerField(default=1, blank=True, null=True)
     def __str__(self):
         return self.name
 
@@ -58,7 +59,7 @@ class Progress(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     progress = models.IntegerField(default=0, null=True)
     lasttime = models.DateTimeField(auto_now=True, blank=True, null=True)
-    nexttime = models.DateTimeField(default=timezone.now(), blank=True, null=True)
+    nexttime = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
     def __str__(self):
         return str(self.user) + str(': ') + str(self.card)
@@ -84,6 +85,33 @@ def create_progress_new_card(sender, instance, created, **kwargs):
     if created:
         for user in User.objects.all():
             Progress.objects.create(user=user, card=instance)
+# auto-updating the card_count in category
+        cat = Category.objects.get(name=instance.category)
+        cat.containing_cards = len(Card.objects.filter(category=cat))
+        cat.save()
 
 signals.post_save.connect(create_progress_new_card, sender=Card, weak=False,
                           dispatch_uid='models.create_progress_new_card')
+
+
+
+
+
+class Case_ZR(models.Model):
+    title = models.CharField(max_length=50)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
+    text = models.TextField()
+    explanation = models.TextField()
+    public = models.BooleanField(default=False)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+    # score?
+    solution = models.CharField(max_length=150, blank=True, null=True)
+    kv = models.BooleanField(default=False)
+    p = models.BooleanField(default=False)
+    mangel = models.BooleanField(default=False)
+    p2 = models.BooleanField(default=False)
+    gefahruebergang = models.BooleanField(default=False)
+    p3 = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

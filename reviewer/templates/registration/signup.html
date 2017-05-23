@@ -1,6 +1,7 @@
 {% extends 'reviewer/base.html' %}
 
 {% block content %}
+<div class="text-left">
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -9,13 +10,18 @@
         {{ field.label_tag }}<br>
         {{ field }}
         {% if field.help_text %}
+          {% autoescape off %}
           <small style="color: grey">{{ field.help_text }}</small>
+          {% endautoescape %}
         {% endif %}
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <button type="submit">Profil anlegen</button>
   </form>
+  <p>Schon angemeldet? <a href={% url 'reviewer:login'%}> Einloggen! </a></p>
+
+</div>
 {% endblock %}

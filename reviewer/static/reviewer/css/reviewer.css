@@ -1,43 +1,121 @@
+.onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "stud. jur.";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "ref. jur.";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
 
 body {
-    background-color: #EEEEEE;
+    background-color: #66ff66;
     font: 400 15px Montserrat, sans-serif;
     padding-top: 70px;
     padding-bottom: 70px;
     overflow-x:hidden;
 }
+
+#homeOben {
+  background-color: darkgrey;
+}
+
  #navbar_brand {
-   background-color: black;
-   border-radius: 2px;
+   border: 2px solid grey;
+   border-radius: 15px;
+   padding: 8px;
+   width: 8em;
  }
 
 .progress-bar {
    transition-duration: 1.5s;
 }
 
+.bigboxes {
+  background-color: #4EF05B;
+  padding: 2em;
+  border-radius: 25px;
+}
+
 .boxes {
-    background-color: lightgrey;
+    background-color: #0C7A3F;
     padding: 2em;
-    border-radius: 25px;
+    border-radius: 15px;
+    color: lightgrey;
 
 }
 
+#entrance-text {
+  background-color: darkgrey;
+  padding: 2em;
+  border-radius: 25px;
+  color: black;
+}
+
 .question {
-  background-color: lightgrey;
+  color: white;
+  background-color: #0C7A3F;
   padding: 1em;
   border-radius: 25px;
 }
 
-.buttons {
+#buttons {
   margin-top: 1em;
   margin-bottom: 1em;
   padding-left: 2em;
   padding-right: 2em;
 }
 
+.wrong {
+  color: red;
+}
+
+#erklarung {
+  border: 2px solid grey;
+  border-radius: 5px;
+}
+
 .cat_name{
   padding-top: 4em;
   padding-bottom: 1em;
+  margin-top: 3em;
 }
 
 
@@ -46,9 +124,21 @@ h1 {
   padding-bottom: 0.5em;
 }
 
+.navbar {
+  background-color: #4EF05B;
 
-#footer {
-  padding: 2em;
+}
+
+.nav-item {
+  padding: 1em;
+
+}
+.nav-item-change {
+  color: black;
+}
+
+#bottom_navbar {
+  background-color: transparent;
 }
 
 .footer {

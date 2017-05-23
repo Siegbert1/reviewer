@@ -14,8 +14,8 @@ urlpatterns = [
     # List of all the Cards of one user
     url(r'^user/([\w-]+)/cardlist/$', views.UserCardList.as_view(), name='user_cardlist'),
     # user_profile is gotten either through username or id
-    url(r'^user/(?P<slug>[\w.@+-]+)/$', views.UserProfile.as_view(), name='user_profile_name'),
-    url(r'^id/(?P<pk>[0-9]+)/$', views.UserProfile.as_view(), name='user_profile_id'),
+    url(r'^user/(?P<slug>[\w.@+-]+)/$', views.UserProfile, name='user_profile_name'),
+    url(r'^id/(?P<pk>[0-9]+)/$', views.UserProfile, name='user_profile_id'),
 
 
     # views for the actual studying
@@ -25,8 +25,14 @@ urlpatterns = [
 
     url(r'^button/(?P<button>[0-9])/(?P<pk>[0-9]+)/$', views.button, name='button'),
 
+    # views for the case_programm
+    url(r'^case_creation/(?P<area>[\w-]+)/$', views.case_creation, name='case_creation'),
+    url(r'^case_edit/(?P<area>[\w-]+)/(?P<pk>[0-9]+)/$', views.case_edit, name='case_edit'),
+    url(r'^case_reviewer/(?P<area>[\w-]+)/(?P<pk>[0-9]+)/$', views.case_reviewer, name='case_reviewer'),
+    url(r'^case_finished/(?P<area>[\w-]+)/(?P<pk>[0-9]+)/$', views.case_finished, name='case_finished'),
 
-    #url(r'^update_progress/(?P<pk>[0-9]+)/$', views.update_progress, name='update_progress'),
+    #
+    url(r'^contact/$', views.contact, name='contact'),
 
 
 

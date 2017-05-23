@@ -1,0 +1,93 @@
+{% extends 'reviewer/base.html' %}
+
+{% block title %}
+Büffeln
+{% endblock %}
+
+{% block content %}
+
+
+
+        <h3>{{ case.title }}</h3>
+        <p>{{ case.category }}</p>
+        <p>Fall:</p><p>{{ case.text }}</p>
+
+
+<form method="POST" class="case-form">{% csrf_token %}
+
+<div class="boxes">
+  <p> Skizze - alle vorliegenden Vorraussetzungen und Probleme ankreuzen: </p>
+      <div class="row">
+          <div class="col-1 text-left">
+          </div>
+
+        <div class="col-2 text-left">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVertrA" aria-expanded="false" aria-controls="collapseVertrA">
+    Vertragliche Ansprüche
+  </button>
+      </div>
+    </div>
+
+  <div class="collapse" id="collapseVertrA">
+                  <div class="row">
+                    <div class="col-2 text-left">
+                    </div>
+
+                    <div class="col-2 text-left">
+
+
+
+                      <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseKV" aria-expanded="false" aria-controls="collapseVertrA">
+                          Kaufvertrag §433 BGB
+                      </button>
+                    </div>
+                    </div>
+    <div class="collapse" id="collapseKV">
+                                  <div class="row">
+                                      <div class="col-3 text-left">
+                                      </div>
+
+                                      <div class="col-2 text-left">
+                                    <p> Gewährleistung: </p>
+                                      </div>
+
+                                    <div class="col-sm-7 text-left">
+                                        </div>
+                                    </div>
+
+
+
+                                                <div class="row">
+                                                <div class="col-3 text-left">
+                                                </div>
+
+
+                                                <div class="col text-left">
+                                                  <p>Vertragsschluss {{ form.kv }}</p>
+                                                  <p>Mangel {{ form.mangel }}</p>
+                                                  <p>Gefahrübergang {{ form.gefahruebergang }}</p>
+                                                  </div>
+
+                                                <div class="col text-left">
+                                                  <p>(P){{ form.p }}</p>
+                                                  <p>(P){{ form.p2 }}</p>
+                                                  <p>(P){{ form.p3 }}</p>
+                                                </div>
+
+
+
+
+
+
+                                                <div class="col-sm-5 text-left">
+                                                </div>
+                                              </div>
+      </div>
+    </div>
+
+          <button type="submit" class="save btn btn-default">Check!</button>
+
+    </form>
+  </div>
+
+{% endblock %}

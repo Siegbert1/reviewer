@@ -6,7 +6,85 @@ Profil
 
 {% block content %}
 
-<p>User: {{ user.username }}</p>
+<div class="row">
+  <div class="col-sm-6 text-center">
+<p>User: <strong>{{ user.username }}</strong></p>
+</div>
+</div>
+<div class="row"><div class="col-sm-6 text-center">
 <a href={% url 'reviewer:change_password' %}>Passwort ändern</a>
+</div></div>
+
+{% comment %}
+switch could be jused to change between normal cards and ref.cards with a change in models
+<div class="row">
+<div class="col-sm-6 text-center">
+<div class="onoffswitch">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+    <label class="onoffswitch-label" for="myonoffswitch">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+    </label>
+    </div>
+</div>
+</div>
+<p></p>
+{% endcomment %}
+
+<p>Lern-Fortschritt:</p>
+<div class="row">
+  <div class="col-sm-2 text-center"></div>
+<div class="col-sm-8 text-center">
+<p>Strafrecht: {{ progress_straf_longtime}}  {{ progress_straf_shorttime }}</p>
+<div class="progress">
+  <div class="progress-bar-striped active bg-info" role="progressbar" aria-valuenow="{{ progress_straf_longtime_percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress_straf_longtime_percent }}%">
+    {{ progress_straf_longtime_percent }}% gut ({{ progress_straf_longtime }} Karten)
+  </div>
+   <div class="progress-bar-striped active bg-warning" role="progressbar" style="width:{{ progress_straf_shorttime_percent }}%" aria-valuenow="{{ progress_straf_shorttime_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_straf_shorttime_percent }}% schlecht ({{ progress_straf_shorttime }} Karten) </div>
+   <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ progress_straf_rest_percent }}%" aria-valuenow="{{ progress_straf_rest_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_straf_rest_percent }}% nicht gespielt ({{ progress_straf_rest }} Karten) </div>
+
+</div>
+</div>
+<div class="col-sm-2 text-center"></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2 text-center"></div>
+<div class="col-sm-8 text-center">
+<p>Öffentliches Recht:</p>
+<div class="progress">
+
+  <div class="progress-bar-striped active bg-info" role="progressbar" aria-valuenow="{{ progress_oeff_longtime_percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress_oeff_longtime_percent }}%">
+    {{ progress_oeff_longtime_percent }}% gut ({{ progress_oeff_longtime }} Karten)
+  </div>
+   <div class="progress-bar-striped active bg-warning" role="progressbar" style="width:{{ progress_oeff_shorttime_percent }}%" aria-valuenow="{{ progress_oeff_shorttime_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_oeff_shorttime_percent }}% schlecht ({{ progress_oeff_shorttime }} Karten) </div>
+   <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ progress_oeff_rest_percent }}%" aria-valuenow="{{ progress_oeff_rest_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_oeff_rest_percent }}% nicht gespielt ({{ progress_oeff_rest }} Karten) </div>
+
+</div>
+</div>
+<div class="col-sm-2 text-center"></div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2 text-center"></div>
+<div class="col-sm-8 text-center">
+<p>Zivilrecht:</p>
+<div class="progress">
+  <div class="progress-bar-striped active bg-info" role="progressbar" aria-valuenow="{{ progress_zr_longtime_percent }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ progress_zr_longtime_percent }}%">
+    {{ progress_zr_longtime_percent }}% gut ({{ progress_zr_longtime }} Karten)
+  </div>
+   <div class="progress-bar-striped active bg-warning" role="progressbar" style="width:{{ progress_zr_shorttime_percent }}%" aria-valuenow="{{ progress_zr_shorttime_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_zr_shorttime_percent }}% schlecht ({{ progress_zr_shorttime }} Karten) </div>
+   <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ progress_zr_rest_percent }}%" aria-valuenow="{{ progress_zr_rest_percent }}" aria-valuemin="0" aria-valuemax="100">
+   {{ progress_zr_rest_percent }}% nicht gespielt ({{ progress_zr_rest }} Karten) </div>
+
+</div>
+</div>
+<div class="col-sm-2 text-center"></div>
+</div>
 
 {% endblock %}

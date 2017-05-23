@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Card, User, Progress, Category
+from .models import Card, User, Progress, Category, Case_ZR
 # Register your models here.
 admin.site.register(Card)
 admin.site.register(User, UserAdmin)
 admin.site.register(Category)
-
+admin.site.register(Case_ZR)
 
 
 

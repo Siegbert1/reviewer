@@ -1,0 +1,98 @@
+{% extends 'reviewer/base.html' %}
+
+{% block title %}
+Büffeln
+{% endblock %}
+
+{% block content %}
+
+{% if correct %}
+<h2> Richtig!</h2>
+{% else %}
+<h2> Leider falsch! </h2>
+{% endif %}
+
+<h6>titel: {{ case.title }}</h6>
+<p>text: {{ case.text }}</p>
+
+<h4> Lösung: </h4>
+
+<form method="POST" class="case-form">{% csrf_token %}
+
+
+  <div class="boxes">
+        <div class="row">
+            <div class="col-1 text-left">
+            </div>
+
+          <div class="col-2 text-left">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVertrA" aria-expanded="false" aria-controls="collapseVertrA">
+      Vertragliche Ansprüche
+    </button>
+        </div>
+      </div>
+
+<!--- if case.xxx makes the visible and red --->
+    <div class="collapse {% if case.kv or case.p or case.mangel or case.p2 or case.gefahruebergang or case.p3 %} show {% endif %}" id="collapseVertrA">
+                    <div class="row">
+                      <div class="col-2 text-left">
+                      </div>
+
+                      <div class="col-2 text-left">
+
+
+
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseKV" aria-expanded="false" aria-controls="collapseVertrA">
+                            Kaufvertrag §433 BGB
+                        </button>
+                      </div>
+                      </div>
+      <div class="collapse {% if case.kv or case.p or case.mangel or case.p2 or case.gefahruebergang or case.p3 %} show {% endif %}" id="collapseKV">
+                                    <div class="row">
+                                        <div class="col-3 text-left">
+                                        </div>
+
+                                        <div class="col-2 text-left">
+                                      <p> Gewährleistung: </p>
+                                        </div>
+
+                                      <div class="col-sm-7 text-left">
+                                          </div>
+                                      </div>
+
+
+
+                                                  <div class="row">
+                                                  <div class="col-3 text-left">
+                                                  </div>
+
+
+                                                  <div class="col text-left">
+                                                    <p {% if wrong0 %} class="wrong"{% endif %}>Vertragsschluss {{ form.kv }}</p>
+                                                    <p  {% if wrong2 %} class="wrong"{% endif %}>Mangel {{ form.mangel }}</p>
+                                                    <p {% if wrong4 %} class="wrong"{% endif %}>Gefahrübergang {{ form.gefahruebergang }}</p>
+                                                    </div>
+
+                                                  <div class="col text-left">
+                                                    <p {% if wrong1 %} class="wrong"{% endif %}>(P){{ form.p }}</p>
+                                                    <p {% if wrong3 %} class="wrong"{% endif %}>(P){{ form.p2 }}</p>
+                                                    <p {% if wrong5 %} class="wrong"{% endif %}>(P){{ form.p3 }}</p>
+                                                  </div>
+
+
+
+
+
+
+                                                  <div class="col-sm-5 text-left">
+                                                  </div>
+                                                </div>
+        </div>
+      </div>
+          <div id="erklarung">
+          <p>Erklärung:</p><p> {{ case.explanation }}</p>
+          </div>
+      </form>
+    </div>
+
+{% endblock %}

@@ -3,9 +3,11 @@
 
 <html lang="de">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link rel="stylesheet" href="{% static 'reviewer/css/bootstrap.min.css' %}" >
-    <link rel="stylesheet" href="{% static 'reviewer/css/bootstrap-theme.min.css' %}">
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'reviewer/css/reviewer.css' %}"/>
 
@@ -15,61 +17,60 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+  <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <a class="navbar-brand" id="navbar_brand" href={% url 'reviewer:home' %}>Streber.party</a>
 
-                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-              <a class="navbar-brand" id="navbar_brand" href={% url 'reviewer:home' %}>Streber.party</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav" id="Navbar">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <ul class="navbar-nav mr-auto">
 {% block navbar_orientation %}
-            <li><a href={% url "reviewer:home" %}>Home</a></li>
-            <li><a href="{% url 'reviewer:home' %}#section1">Strafrecht</a></li>
-            <li><a href="{% url 'reviewer:home' %}#section2">Öffentliches Recht</a></li>
-            <li><a href="{% url 'reviewer:home' %}#section3">Zivilrecht</a></li>
+            <li class="nav-item"><a class='nav-item-change' href={% url "reviewer:home" %}>Home</a></li>
+            <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:home' %}#section1">Strafrecht</a></li>
+            <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:home' %}#section2">Öffentliches Recht</a></li>
+            <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:home' %}#section3">Zivilrecht</a></li>
 {% endblock %}
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a href={% url "reviewer:user_profile_id" pk=request.user.id %}>Profile</a></li>
-            <li><a href={% url 'reviewer:logout' %}> Log out</a></li>
+            <li class="nav-item"><a class='nav-item-change' href={% url "reviewer:user_profile_id" pk=request.user.id %}>Profile</a></li>
+            <li class="nav-item"><a class='nav-item-change' href={% url 'reviewer:logout' %}> Log out</a></li>
             {% endif %}
 
             {% if not user.is_authenticated %}
-            <li><a href={% url 'reviewer:signup' %}> Sign up</a></li>
-            <li><a href={% url 'reviewer:login' %}> Log in</a></li>
+            <li class="nav-item"><a class='nav-item-change' href={% url 'reviewer:signup' %}> Account anlegen</a></li>
+            <li class="nav-item"><a class='nav-item-change' href={% url 'reviewer:login' %}> Anmelden</a></li>
             {% endif %}
         </ul>
       </div>
-    </div>
+
         </nav>
 
 
-    <div class= "text-center">
+    <div class="text-center">
 
         {% block content %}{% endblock %}
 
     </div>
 
 
+<nav class="navbar fixed-bottom navbar-light bg-faded" id='bottom_navbar'>
 
-<div class="navbar navbar-fixed-bottom">
-  <a href='#' class='footer'>Impressum</a>
-  <a href='#' class='footer'>Über uns</a>
-  <a href='#' class='footer'>Kontakt</a>
-</div>
+  <ul class="nav justify-content-end">
+    {% block bottom-navbar %}
+  <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:contact' %}">Impressum</a></li>
+  <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:contact' %}">Über uns</a></li>
+  <li class="nav-item"><a class='nav-item-change' href="{% url 'reviewer:contact' %}">Kontakt</a></li>
+    {% endblock %}
+  </ul>
+
+</nav>
 
 
 
     <script src={% static "reviewer/js/jquery-3.2.1.min.js" %}></script>
+    <script src={% static "reviewer/js/tether.min.js" %}></script>
     <script src={% static "reviewer/js/bootstrap.min.js" %}></script>
     {% block javascript %}
     {% endblock %}

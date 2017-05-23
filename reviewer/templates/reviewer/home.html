@@ -5,10 +5,30 @@ Streber.Party
 {% endblock %}
 
 {% block navbar_orientation %}
-<li><a href="#home">Home</a></li>
-<li><a href="#section1">Strafrecht</a></li>
-<li><a href="#section2">Öffentliches Recht</a></li>
-<li><a href="#section3">Zivilrecht</a></li>
+<li class="nav-item"><a class='nav-item-change' href="#home">Home</a></li>
+<li class="nav-item dropdown"><a class='nav-item-change dropdown-toggle' href="#" id="navbarDropdownStraf" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Strafrecht</a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownStraf">
+      {% for cat in straf_cats %}
+       <a class="dropdown-item" href={% url 'reviewer:home' %}#{{cat.name}}>{{ cat.name }}</a>
+       {% endfor %}
+   </div>
+   </li>
+<li class="nav-item dropdown"><a class='nav-item-change dropdown-toggle' href="#" id="navbarDropdownOeff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Öffentliches Recht</a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownOeff">
+      {% for cat in oeff_cats %}
+       <a class="dropdown-item" href={% url 'reviewer:home' %}#{{cat.name}}>{{ cat.name }}</a>
+       {% endfor %}
+   </div>
+</li>
+<li class="nav-item dropdown"><a class='nav-item-change dropdown-toggle' href="#" id="navbarDropdownZR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zivilrecht</a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdownZR">
+      {% for cat in zr_cats %}
+       <a class="dropdown-item" href={% url 'reviewer:home' %}#{{cat.name}}>{{ cat.name }}</a>
+       {% endfor %}
+   </div>
+
+
+
 {% endblock %}
 
 
@@ -19,18 +39,19 @@ Streber.Party
 {% endifequal %}
 
 
-
 {% if user.is_authenticated %}
 <div class="container" id="home">
 <div class="row">
 <div class="col-sm-12 text-center"><h1> Heute fällige Karten: {{ cards_due }} </h1>
 
-<div class="col-sm-12 text-center"><p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='all' %}> Alle lernen </a></p></div>
+<div class="col-sm-12 text-center"><p><a class="btn btn-secondary" id="homeOben" role="button" href={% url 'reviewer:study_start' name='due' setting='all' %}> Alle lernen </a></p></div>
+
+
 
 <div class="col-sm-12 text-center boxes">
-<p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='sr' %}> Strafrecht lernen </a>
-<a class="btn btn-danger" role="button" href={% url 'reviewer:study_start' name='due' setting='or' %}> Öff-recht lernen </a>
-<a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name='due' setting='zr' %}> Zivilrecht lernen </a></p></div>
+<p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name='due' setting='sr' %}> Strafrecht lernen </a>
+<a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name='due' setting='or' %}> Öff-recht lernen </a>
+<a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name='due' setting='zr' %}> Zivilrecht lernen </a></p></div>
 
 </div>
 </div>
@@ -38,16 +59,31 @@ Streber.Party
 
 <div class="container" id="section1">
 <div class="row">
-  <div class="col-sm-12 text-center "><h1> Strafrecht </h1></div>
+  <div class="col-sm-12 text-center slideanim"><h1> Strafrecht </h1></div>
 </div>
 <div class="row">
   {% for category in straf_cats %}
-  <div class="col-sm-6 slideanim">
+  <div class="col-sm-6 slideanim" id={{ category.name }}>
 
     <p class="cat_name"><strong>{{ category.name }}</strong></p>
-    <div class="boxes">
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Lernen </a></p>
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Alle lernen </a></p>
+      <div class="boxes">
+    <div class="progress">
+  <!--- method takes dictionary and matches "progress" in the list to the category, then sets progress-bar accordingly --->
+      {% for key, value in dic.items %}
+      {% if key == category.pk %}
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value }}%">
+        {{ value }}%
+      </div>
+<!-- value is substracted by 100 and cut of the "-", so we get the actual rest-value to 100% -->
+       <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ value|add:"-100"|cut:"-" }}%" aria-valuenow="{{ value|add:"-100"|cut:"-" }}" aria-valuemin="0" aria-valuemax="100"></div>
+
+      {% endif %}
+      {% endfor %}
+    </div>
+  <p> </p>
+    <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Fällige Karten lernen </a></p>
+      <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='not_studied' %}> Nur neue Karten lernen </a>
+    <a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Alle Karten lernen </a></p>
   </div>
 </div>
   {% endfor %}
@@ -64,11 +100,26 @@ Streber.Party
   <div class="row">
   {% for category in oeff_cats %}
 
-    <div class="col-sm-6 slideanim">
+    <div class="col-sm-6 slideanim" id={{ category.name }}>
     <p class="cat_name"><strong>{{ category.name }}</strong></p>
     <div class="boxes">
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Study due cards! </a></p>
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Study all! </a></p>
+      <div class="progress">
+    <!--- method takes dictionary and matches "progress" in the list to the category, then sets progress-bar accordingly --->
+        {% for key, value in dic.items %}
+        {% if key == category.pk %}
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value }}%">
+          {{ value }}%
+        </div>
+  <!-- value is substracted by 100 and cut of the "-", so we get the actual rest-value to 100% -->
+         <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ value|add:"-100"|cut:"-" }}%" aria-valuenow="{{ value|add:"-100"|cut:"-" }}" aria-valuemin="0" aria-valuemax="100"></div>
+
+        {% endif %}
+        {% endfor %}
+      </div>
+      <p> </p>
+        <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Fällige Karten lernen </a></p>
+          <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='not_studied' %}> Nur neue Karten lernen </a>
+        <a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Alle Karten lernen </a></p>
 
   </div>
 </div>
@@ -80,16 +131,30 @@ Streber.Party
 
 <div class="container" id="section3">
 <div class="row">
-    <div class="col-sm-12 text-center"><h1> Zivilrecht </h1>
+    <div class="col-sm-12 text-center"><h1> Zivilrecht </h1></div>
     </div>
   <div class="row">
   {% for category in zr_cats %}
-  <div class="col-sm-6 text-center slideanim">
+  <div class="col-sm-6 text-center slideanim" id={{ category.name }}>
     <p class="cat_name"><strong>{{ category.name }}</strong></p>
     <div class="boxes">
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Study due cards! </a></p>
-    <p><a class="btn btn-primary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Study all! </a></p>
+      <div class="progress">
+    <!--- method takes dictionary and matches "progress" in the list to the category, then sets progress-bar accordingly --->
+        {% for key, value in dic.items %}
+        {% if key == category.pk %}
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{ value }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ value }}%">
+          {{ value }}%
+        </div>
+  <!-- value is substracted by 100 and cut of the "-", so we get the actual rest-value to 100% -->
+         <div class="progress-bar-striped active bg-danger" role="progressbar" style="width:{{ value|add:"-100"|cut:"-" }}%" aria-valuenow="{{ value|add:"-100"|cut:"-" }}" aria-valuemin="0" aria-valuemax="100"></div>
 
+        {% endif %}
+        {% endfor %}
+      </div>
+      <p> </p>
+        <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='cat_due' %}> Fällige Karten lernen </a></p>
+          <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='not_studied' %}> Nur neue Karten lernen </a>
+        <a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=category.name setting='all' %}> Alle Karten lernen </a></p>
   </div>
 </div>
   {% endfor %}
@@ -101,43 +166,94 @@ Streber.Party
 
 {% else %} <!--- same as 'if not authenticated' --->
 
-<div class="row" id="home">
-<div class="col-sm-12 text-center"><p> Probier es aus! </p>
-<p> Du Lurch! </p>
+<div class="container" id="home">
+  <div id="entrance-text">
+<div class="row">
+<div class="col-sm-12 text-center"><p> Probier es aus, du Lurch! </p>
+<p>  </p>
+<p> Die Karten wurden vom Oberchecker persönlich erstellt. </p>
+<p> Melde dich an, damit: </p>
+<div class="text-left">
+<ul>
+  <li> dein Lernfortschritt gespeichert wird, </li>
+  <li> dir die gelernten Karten nach einem sinnvollen Lernalgorythmus erneut vorgelegt werden, </li>
+  <li> und deine Mutter stolz auf dich ist, weil du endlich etwas für die Uni tust! </li>
+</ul>
+<p> Teste die Karten, indem du auf "Study!" unter dem jeweiligen Rechtsgebiet drückst. </p>
 </div>
 </div>
-
+</div>
+</div>
+</div>
 
 {% with straf_cats.0 as straf_first and oeff_cats.0 as oeff_first and zr_cats.0 as zr_first %}
-<div class="row" id="section1">
+
+<div class="container" id="section1">
+<div class="row">
 <div class="col-sm-12 text-center"><h1> Strafrecht </h1></div>
-</div></div>
-<div class="row">
-<div class="col-sm-12 text-center"><p>{{ straf_first.name }}</p></div>
 </div>
 <div class="row">
-<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=straf_first.name setting='all' %}> Study! </a></p></div>
+<div class="col-sm-6 text-center">
+  <p><strong>{{ straf_first.name }}</strong></p>
+
+<div class=" boxes">
+  <p><a  class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=straf_first.name setting='all' %}> Study! </a></p>
 </div>
-<div class="row" id="section2">
-<div class="col-sm-12 text-center"><h1> Öffentliches Recht </h1>
-</div></div>
-<div class="row">
-<div class="col-sm-12 text-center"><p>{{ oeff_first.name }}</p>
-</div></div>
-<div class="row">
-<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=oeff_first.name setting='all' %}> Study! </a></p>
-</div></div>
-<div class="row" id="section3">
-<div class="col-sm-12 text-center"><h1> Zivilrecht </h1>
-</div></div>
-<div class="row">
-<div class="col-sm-12 text-center"><p>{{ zr_first.name }}</p>
-  </div></div>
-<div class="row">
-<div class="col-sm-12 text-center"><p><a href={% url 'reviewer:study_start' name=zr_first.name setting='all' %}> Study! </a></p>
-  </div></div>
+</div>
+<div class="col-sm-6 text-center">
+  <p><strong>(...)</strong></p>
+<div class=" boxes">
+  <p><a  class="btn btn-outline-secondary" role="button" href={% url 'reviewer:signup' %}> Sign up! </a></p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="container slideanim" id="section2">
+  <div class="row">
+  <div class="col-sm-12 text-center"><h1> Öffentliches Recht </h1></div>
+  </div>
+  <div class="row">
+  <div class="col-sm-6 text-center">
+    <p><strong>{{ oeff_first.name }}</strong></p>
+
+  <div class=" boxes">
+    <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=oeff_first.name setting='all' %}> Study! </a></p>
+  </div>
+  </div>
+  <div class="col-sm-6 text-center">
+    <p><strong>(...)</strong></p>
+  <div class=" boxes">
+    <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:signup' %}> Sign up! </a></p>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+
+<div class="container slideanim" id="section3">
+  <div class="row">
+  <div class="col-sm-12 text-center"><h1> Zivilrecht </h1></div>
+  </div>
+  <div class="row">
+  <div class="col-sm-6 text-center">
+    <p><strong>{{ zr_first.name }}</strong></p>
+
+  <div class=" boxes">
+    <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:study_start' name=zr_first.name setting='all' %}> Study! </a></p>
+  </div>
+  </div>
+  <div class="col-sm-6 text-center">
+    <p><strong>(...)</strong></p>
+  <div class=" boxes">
+    <p><a class="btn btn-outline-secondary" role="button" href={% url 'reviewer:signup' %}> Sign up! </a></p>
+  </div>
+  </div>
+  </div>
+  </div>
 {% endwith %}
-</div>
+
 
 
 {% endif %}
