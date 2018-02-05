@@ -444,11 +444,11 @@ def case_finished(request, pk, area):
         context['correct'] = False
     context['answerstr'] = answer_string
 
-    # compares answer and solution and outputs the indices of the not-equal letters in a list
+    # compares answer and solution strings and outputs the indices of the not-equal letters in a list
     x = answer_string
     y = case.solution
     wrong = [i for i in range(len(x)) if x[i] != y[i]]
-    # give wrong answers to template to mark them as such
+    # give wrong answers to template to mark them as such  (they are in the template as wrong0, wrong1, wrong2, but only the ones which are truly wrong, so only check for existance)
     for number in wrong:
         name = "wrong" + str(number)
         context[name] = True

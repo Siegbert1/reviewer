@@ -17,7 +17,8 @@ class CaseForm_ZR(forms.ModelForm):
 
     class Meta:
         model = Case_ZR
-        fields = ('title', 'category', 'text', 'explanation', 'public', 'kv', 'p', 'mangel', 'p2', 'gefahruebergang', 'p3',)
+        #fields = ('title', 'category', 'text', 'explanation', 'public', 'kv', 'p', 'mangel', 'p2', 'gefahruebergang', 'p3', 'wv', 'p4', 'wvmangel', 'p5', 'abnahme', 'p6', 'cic', 'p7', 'cicpv', 'p8', 'cicvm', 'p9')
+        exclude = ['owner', 'solution'] #defines fields which should NOT be shwon
 
     def process(self):
     # Assumes .cleaned_data exists because this method is always invoked after .is_valid(), otherwise will raise AttributeError
@@ -39,8 +40,8 @@ class CaseForm_ZR(forms.ModelForm):
 class CheckForm_ZR(forms.ModelForm):
     class Meta:
         model = Case_ZR
-        fields = ('kv', 'p', 'mangel', 'p2', 'gefahruebergang', 'p3',)
-
+        #fields = ('kv', 'p', 'mangel', 'p2', 'gefahruebergang', 'p3',)
+        exclude = ['title', 'category', 'text', 'explanation', 'public', 'owner', 'solution', 'card']
 
     def process(self):
     # Assumes .cleaned_data exists because this method is always invoked after .is_valid(), otherwise will raise AttributeError
@@ -48,7 +49,7 @@ class CheckForm_ZR(forms.ModelForm):
     # do something interesting with your data in cd
         string = ""
         for key, value in cd.items():
-            if key == "title" or key == "category" or key == "text" or key == "explanation" or key == "public":
+            if key == "title" or key == "category" or key == "text" or key == "explanation" or key == "public" or key == "owner" or key == "solution" or  key == "card":
                 pass
             else:
                 if value == True:

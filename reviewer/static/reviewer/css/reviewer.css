@@ -48,7 +48,7 @@
 body {
     background-color: #66ff66;
     font: 400 15px Montserrat, sans-serif;
-    padding-top: 70px;
+    padding-top: 80px;
     padding-bottom: 70px;
     overflow-x:hidden;
 }
@@ -79,7 +79,26 @@ body {
     padding: 2em;
     border-radius: 15px;
     color: lightgrey;
+    box-shadow: 2px 2px #262626;
 
+}
+
+.btn-responsive {
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+.reviewer-box {
+  border-bottom: 1px solid grey;
+  border-radius: 2px
+}
+
+
+#base-ground {
+  background-color: #ffffcc;
+  border-radius: 5px;
+  box-shadow: 2px 2px grey;
+  padding-bottom: 50px;
 }
 
 #entrance-text {

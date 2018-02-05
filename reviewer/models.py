@@ -106,12 +106,33 @@ class Case_ZR(models.Model):
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     # score?
     solution = models.CharField(max_length=150, blank=True, null=True)
+# Vertraglich
+# Kaufvertrag
     kv = models.BooleanField(default=False)
-    p = models.BooleanField(default=False)
+    kp = models.BooleanField(default=False)
     mangel = models.BooleanField(default=False)
-    p2 = models.BooleanField(default=False)
+    kp2 = models.BooleanField(default=False)
     gefahruebergang = models.BooleanField(default=False)
-    p3 = models.BooleanField(default=False)
+    kp3 = models.BooleanField(default=False)
+#Werkvertrag
+    wv = models.BooleanField(default=False)
+    wp = models.BooleanField(default=False)
+    wvmangel = models.BooleanField(default=False)
+    wp2 = models.BooleanField(default=False)
+    abnahme = models.BooleanField(default=False)
+    wp3 = models.BooleanField(default=False)
+#Dienstvertrag
+    dv = models.BooleanField(default=False)
+    dp = models.BooleanField(default=False)
+    
+# Quasivertraglich
+# CiC
+    cic = models.BooleanField(default=False)
+    cp = models.BooleanField(default=False)
+    cicpv = models.BooleanField(default=False)
+    cp2 = models.BooleanField(default=False)
+    cicvm = models.BooleanField(default=False)
+    cp3 = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

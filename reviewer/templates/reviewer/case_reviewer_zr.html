@@ -17,38 +17,699 @@ Büffeln
 
 <div class="boxes">
   <p> Skizze - alle vorliegenden Vorraussetzungen und Probleme ankreuzen: </p>
+<!--- 1.Button --->
+<div class="row">
+            <div class="col-sm-1 text-left">
+            </div>
+
+          <div class="col-2 text-left">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVertrA" aria-expanded="false" aria-controls="collapseVertrA">
+      Vertragliche Ansprüche
+    </button>
+        </div>
+      </div>
+
+    <div class="collapse" id="collapseVertrA">
+<!--- Vertragsschluss --->
+<div class="row">
+        <div class="col-sm-2 text-left">
+        </div>
+        <div class="col text-left">
+          <p>
+              Vertragsschluss {{ form.kv }}
+          </p>
+        </div>
+        <div class="col-3 text-left">
+          <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseRehiE" aria-expanded="false" aria-controls="collapseRehiE">
+              (P)
+          </button>
+        </div>
+        </div>
+<!--- WE, Vertretung, rechtshindernde Einwendungen --->
+<div class="collapse" id="collapseRehiE">
+<!--- Willenserklärung --->
+<div class="row">
+          <div class="col-sm-3 text-left">
+          </div>
+          <div class="col-2 text-left">
+            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseWE" aria-expanded="false" aria-controls="collapseWE">
+                Willenserklärung
+            </button>
+
+          </div>
+          </div>
+          <div class="collapse" id="collapseWE">
+                <!--- block 1 --->
+                  <div class="row">
+                  <div class="col-sm-3 text-left">
+                  </div>
+                    <div class="col text-left">
+                    <p>{{ form.kv }} (P) Angebot</p>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <div class="col-sm-3 text-left">
+                    </div>
+                    <div class="col text-left">
+                    <p>{{ form.kp }} (P) Erklärung</p>
+                    </div>
+                  </div>
+                <!--- block 2 --->
+                  <div class="row">
+                  <div class="col-sm-3 text-left">
+                  </div>
+                    <div class="col text-left">
+                    <p>{{ form.mangel }} (P) Annahme </p>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-3 text-left">
+                    </div>
+                    <div class="col text-left">
+                    <p>{{ form.kp2 }} (P) Erklärung </p>
+                    </div>
+
+                  </div>
+          <!--- ende WE --->
+            </div>
+<!--- Vertretung --->
+<div class="row">
+      <div class="col-sm-3 text-left">
+      </div>
+      <div class="col-2 text-left">
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseVertretung" aria-expanded="false" aria-controls="collapseVertretung">
+            Vertretung
+        </button>
+
+      </div>
+      </div>
+      <div class="collapse" id="collapseVertretung">
+        <div class="row">
+        <div class="col-sm-3 text-left">
+        </div>
+          <div class="col text-left">
+          <p class="reviewer-box">§§164 ff. </p>
+          </div>
+        </div>
+      <!--- row 1 --->
+            <div class="row">
+            <div class="col-sm-3 text-left">
+            </div>
+              <div class="col text-left">
+              <p>{{ form.kv }} eigene Willenserklärung </p>
+              </div>
+
+              <div class="col-1 text-left">
+              <p>{{ form.kp2 }}(P) </p>
+              </div>
+            </div>
+            <!--- row2 --->
+            <div class="row">
+            <div class="col-sm-3 text-left">
+            </div>
+              <div class="col text-left">
+                <p>{{ form.mangel }} in fremdem Namen</p>
+              </div>
+
+              <div class="col-1 text-left">
+              <p>{{ form.kp2 }}(P) </p>
+              </div>
+            </div>
+            <!--- row3 --->
+            <div class="row">
+            <div class="col-sm-3 text-left">
+            </div>
+              <div class="col text-left">
+            <p>{{ form.mangel }} mit Vertretungsmacht</p>
+              </div>
+
+              <div class="col-1 text-left">
+              <p>{{ form.kp2 }}(P) </p>
+              </div>
+            </div>
+        <!--- Ende Vertretung -->
+      </div>
+
+<!--- rechtshindernde Einwendungen --->
+<div class="row">
+        <div class="col-sm-3 text-left">
+        </div>
+        <div class="col-2 text-left">
+          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseRehiEinwendungen" aria-expanded="false" aria-controls="collapseRehiEinwendungen">
+              rechtshindernde Einwendungen
+          </button>
+
+        </div>
+        </div>
+        <div class="collapse" id="collapseRehiEinwendungen">
+        <!--- block  1 --->
+            <div class="row">
+            <div class="col-sm-3 text-left">
+            </div>
+              <div class="col text-left">
+              <p class="reviewer-box">§§ 104ff.: </p>
+              </div>
+            </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p>{{ form.kv }} Geschäftsunfähigkeit/ eingeschränkte Geschäftsfähigkeit </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <!--- block 2 --->
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p class="reviewer-box">§§116 ff.: </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                  <p>{{ form.mangel }}Vorbehalt, Scheingeschäft, Ernsthaftigkeit</p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <!--- block 3 --->
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p class="reviewer-box">§125: </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Verletzung einer Formvorschrift </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Heilung/Entbehrlichkeit </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <!--- block 4 --->
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p class="reviewer-box">§134: </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Verletzung eines Verbotsgesetzes </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <!--- block 5 --->
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p class="reviewer-box">§138: </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Wucher/Sittenwidrigkeit </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <!--- block 5 --->
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+                <p class="reviewer-box">§142: </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Anfechtungsgrund: §§119 ff. </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Anfechtungserklärung: §143 </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-3 text-left">
+              </div>
+                <div class="col text-left">
+              <p>{{ form.mangel }} Anfechtungsfrist: §§121, 124 </p>
+                </div>
+
+                <div class="col-1 text-left">
+                <p>{{ form.kp2 }}(P) </p>
+                </div>
+              </div>
+          <!--- Ende rechtshindernde Einwendungen -->
+      </div>
+<!--- Ende Block WE, Vert, rechtshindernde Einwendungen --->
+</div>
+
+
+
+<!--- 1.1. Button --->
+<div class="row">
+                      <div class="col-sm-2 text-left">
+                      </div>
+                      <div class="col-2 text-left">
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseKV" aria-expanded="false" aria-controls="collapseVertrA">
+                            Kaufvertrag §433 BGB
+                        </button>
+
+                      </div>
+                      </div>
+      <div class="collapse" id="collapseKV">
+
+<!--- 1.1.1. Button --->
+<div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                      <div class="col-2 text-left">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseGewaehr" aria-expanded="false" aria-controls="collapseGewaehr">
+                          Gewährleistungsrecht
+                        </button>
+
+                      </div>
+                      </div>
+<div class="collapse" id="collapseGewaehr">
+<!--- block 1 --->
+                      <div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                        <div class="col text-left">
+                        <p class="reviewer-box">§437 iVm. §§ </p>
+                        </div>
+                      </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Mangel </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Gefahrübergang </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+
+<!--- 1.1.1. Button Ende --->
+</div>
+<!--- 1.1.2. Button --->
+<div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                      <div class="col-2 text-left">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseNachErfuellung" aria-expanded="false" aria-controls="collapseNachErfuellung">
+                          Nacherfüllung
+                        </button>
+
+                      </div>
+                      </div>
+<div class="collapse" id="collapseNachErfuellung">
+<!--- block 1 --->
+                      <div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                        <div class="col text-left">
+                        <p class="reviewer-box">§439 </p>
+                        </div>
+                      </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Nachbesserung </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Neulieferung </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+
+<!--- 1.1.2. Button Ende --->
+</div>
+<!--- 1.1.3. Button --->
+<div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                      <div class="col-2 text-left">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseKaufSchE" aria-expanded="false" aria-controls="collapseKaufSchE">
+                          Schadensersatz
+                        </button>
+
+                      </div>
+                      </div>
+<div class="collapse" id="collapseKaufSchE">
+<!--- block 1 --->
+<div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                        <div class="col text-left">
+                        <p class="reviewer-box">§§280 ff. </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                        <div class="col text-left">
+                        <p> Schuldverhältnis </p>
+                        </div>
+                      </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Pflichtverletzung </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} iVm. § 281: Nicht-/Schlechtleistung </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} iVm. § 282: Nebenpflichtverletzung </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} iVm. § 283: Unmöglichkeit </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} iVm. § 311a: anfängliche Unmöglichkeit </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                      <!--- block 2 --->
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} Vertreten müssen </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+
+<!--- 1.1.3. Button Ende --->
+</div>
+<!--- 1.1.4. Button --->
+<div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                      <div class="col-2 text-left">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseKaufRuecktritt" aria-expanded="false" aria-controls="collapseKaufRuecktritt">
+                          Rücktritt §346
+                        </button>
+
+                      </div>
+                      </div>
+      <div class="collapse" id="collapseKaufRuecktritt">
+  <!--- block 1 --->
+                      <div class="row">
+                      <div class="col-sm-3 text-left">
+                      </div>
+                        <div class="col text-left">
+                        <p class="reviewer-box"> Rücktrittsgrund: </p>
+                        </div>
+                      </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} vertragliches Rücktrittsrecht </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-3 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p> Gesetzliches Rücktrittsrecht: </p>
+                          </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-4 text-left">
+                        </div>
+                          <div class="col text-left">
+                          <p>{{ form.kv }} §323 I 1 1./2.Alt </p>
+                          </div>
+
+                          <div class="col-1 text-left">
+                          <p>{{ form.kp2 }}(P) </p>
+                          </div>
+                        </div>
+
+<!--- 1.1.4. Button Ende --->
+</div>
+<!--- 1.1. Button Ende --->
+</div>
+    <!--- 1.2. Button --->
+                        <div class="row">
+                                  <div class="col-sm-2 text-left">
+                                  </div>
+                                  <div class="col-2 text-left">
+
+                                  <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseWV" aria-expanded="false" aria-controls="collapseWA">
+                                                        Werkvertrag §634 BGB
+                                  </button>
+                                  </div>
+                        </div>
+      <div class="collapse" id="collapseWV">
+                      <div class="row">
+                          <div class="col-3 text-left">
+                          </div>
+
+                          <div class="col-2 text-left">
+                        <p> Gewährleistung: </p>
+                          </div>
+
+                        <div class="col-sm-7 text-left">
+                            </div>
+                        </div>
+
+
+
+                                    <div class="row">
+                                    <div class="col-3 text-left">
+                                    </div>
+
+
+                                    <div class="col text-left">
+                                      <p>Vertragsschluss {{ form.wv }}</p>
+                                      <p>Mangel {{ form.wvmangel }}</p>
+                                      <p>Abnahme {{ form.abnahme }}</p>
+                                      </div>
+
+                                    <div class="col text-left">
+                                      <p>(P){{ form.wp }}</p>
+                                      <p>(P){{ form.wp2 }}</p>
+                                      <p>(P){{ form.wp3 }}</p>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-sm-5 text-left">
+                                    </div>
+                                  </div>
+                                  </div>
+
+
+      <!--- 1.3 Button --->
+                          <div class="row">
+                                    <div class="col-sm-2 text-left">
+                                    </div>
+                                    <div class="col-2 text-left">
+
+                                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseDV" aria-expanded="false" aria-controls="collapseWA">
+                                                          Dienstvertrag §611 BGB
+                                    </button>
+                                    </div>
+                          </div>
+        <div class="collapse" id="collapseDV">
+                        <div class="row">
+                            <div class="col-3 text-left">
+                            </div>
+
+                            <div class="col-2 text-left">
+                          <p> SchE: </p>
+                            </div>
+
+                          <div class="col-sm-7 text-left">
+                              </div>
+                          </div>
+
+
+
+                                      <div class="row">
+                                      <div class="col-3 text-left">
+                                      </div>
+
+
+                                      <div class="col text-left">
+                                        <p>Vertragsschluss {{ form.dv }}</p>
+                                        </div>
+
+                                      <div class="col text-left">
+                                        <p>(P){{ form.dp }}</p>
+                                      </div>
+
+
+
+
+
+
+                                      <div class="col-sm-5 text-left">
+                                      </div>
+                                    </div>
+                                    </div>
+
+<!--- end 1.Button --->
+        </div>
+<!--- 2. Button --->
       <div class="row">
-          <div class="col-1 text-left">
+          <div class="col-sm-1 text-left">
           </div>
 
         <div class="col-2 text-left">
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseVertrA" aria-expanded="false" aria-controls="collapseVertrA">
-    Vertragliche Ansprüche
-  </button>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseQVA" aria-expanded="false" aria-controls="collapseQVA">
+      Quasivertragliche Ansprüche
+      </button>
       </div>
-    </div>
+      </div>
 
-  <div class="collapse" id="collapseVertrA">
+      <div class="collapse" id="collapseQVA">
+
+  <!--- 2.1. Button --->
                   <div class="row">
-                    <div class="col-2 text-left">
+                    <div class="col-sm-2 text-left">
                     </div>
 
                     <div class="col-2 text-left">
 
 
 
-                      <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseKV" aria-expanded="false" aria-controls="collapseVertrA">
-                          Kaufvertrag §433 BGB
+                      <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsecic" aria-expanded="false" aria-controls="collapsecic">
+                          C.i.C. §311 II iVm. §241 II BGB
                       </button>
                     </div>
                     </div>
-    <div class="collapse" id="collapseKV">
+      <div class="collapse" id="collapsecic">
                                   <div class="row">
                                       <div class="col-3 text-left">
                                       </div>
 
                                       <div class="col-2 text-left">
-                                    <p> Gewährleistung: </p>
+                                    <p> Schadensersatz §280 I BGB: </p>
                                       </div>
 
                                     <div class="col-sm-7 text-left">
@@ -63,15 +724,15 @@ Büffeln
 
 
                                                 <div class="col text-left">
-                                                  <p>Vertragsschluss {{ form.kv }}</p>
-                                                  <p>Mangel {{ form.mangel }}</p>
-                                                  <p>Gefahrübergang {{ form.gefahruebergang }}</p>
+                                                  <p>Schuldverhältnis: Vertragsanbahnung §311 II BGB{{ form.cic }}</p>
+                                                  <p>Pflichtverletzung {{ form.cicpv }}</p>
+                                                  <p>Vertretenmüssen {{ form.cicvm }}</p>
                                                   </div>
 
                                                 <div class="col text-left">
-                                                  <p>(P){{ form.p }}</p>
-                                                  <p>(P){{ form.p2 }}</p>
-                                                  <p>(P){{ form.p3 }}</p>
+                                                  <p>(P){{ form.cp }}</p>
+                                                  <p>(P){{ form.cp2 }}</p>
+                                                  <p>(P){{ form.cp3 }}</p>
                                                 </div>
 
 
@@ -83,7 +744,57 @@ Büffeln
                                                 </div>
                                               </div>
       </div>
-    </div>
+<!--- end of 2.Button --->
+      </div>
+<!--- 3.Button --->
+            <div class="row">
+                <div class="col-sm-1 text-left">
+                </div>
+
+              <div class="col-2 text-left">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDingA" aria-expanded="false" aria-controls="collapseDingA">
+          Dingliche Ansprüche
+        </button>
+            </div>
+          </div>
+
+        <div class="collapse" id="collapseDingA">
+<!--- 3.1. Button --->
+<!--- end 3.Button --->
+            </div>
+<!--- 4.Button --->
+              <div class="row">
+                  <div class="col-sm-1 text-left">
+                  </div>
+
+                <div class="col-2 text-left">
+                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseDeliktA" aria-expanded="false" aria-controls="collapseDeliktA">
+            Deliktische Ansprüche
+          </button>
+              </div>
+            </div>
+
+          <div class="collapse" id="collapseDeliktA">
+<!--- 4.1. Button --->
+<!--- end 4.Button --->
+</div>
+<!--- 5.Button --->
+              <div class="row">
+                  <div class="col-sm-1 text-left">
+                  </div>
+
+                <div class="col-2 text-left">
+                  <button class="btn btn-primary btn-responsive" type="button" data-toggle="collapse" data-target="#collapseBereichA" aria-expanded="false" aria-controls="collapseBereichA">
+            Bereicherungsrechtliche Ansprüche
+          </button>
+              </div>
+            </div>
+
+          <div class="collapse" id="collapseBereichA">
+<!--- 5.1. Button --->
+<!--- end 5.Button --->
+  </div>
+<!--- end of checkboxes --->
 
           <button type="submit" class="save btn btn-default">Check!</button>
 
