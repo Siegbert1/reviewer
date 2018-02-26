@@ -24,6 +24,8 @@ class CaseForm_ZR(forms.ModelForm):
     # Assumes .cleaned_data exists because this method is always invoked after .is_valid(), otherwise will raise AttributeError
         cd = self.cleaned_data
     # do something interesting with your data in cd
+
+    # produces an answer string which is stored in the object, but not used anymore --> redundant
         string = ""
         for key, value in cd.items():
             if key == "title" or key == "category" or key == "text" or key == "explanation" or key == "public":
@@ -47,14 +49,16 @@ class CheckForm_ZR(forms.ModelForm):
     # Assumes .cleaned_data exists because this method is always invoked after .is_valid(), otherwise will raise AttributeError
         cd = self.cleaned_data
     # do something interesting with your data in cd
-        string = ""
+    # produces a list containing strings of the answers the user has given by taking the "marked (= true)" boolean fields
+        answer_list = []
         for key, value in cd.items():
             if key == "title" or key == "category" or key == "text" or key == "explanation" or key == "public" or key == "owner" or key == "solution" or  key == "card":
                 pass
             else:
                 if value == True:
-                    string = string + "T"
+                    answer_list.append(str(key))
                 else: # value == False
-                    string = string + "F"
+                    pass
 
-        self.cleaned_data['answer_string'] = string
+
+        self.cleaned_data['answer_list'] = answer_list

@@ -406,8 +406,10 @@ def case_reviewer(request, pk, area):
                 form = CheckForm_ZR(request.POST, instance=case)
             if form.is_valid():
                 form.process()
-                string = form.cleaned_data['answer_string']
-                request.session['answer_string'] = string
+                #string = form.cleaned_data['answer_string']
+                answer_list = form.cleaned_data['answer_list']
+                #request.session['answer_string'] = string
+                request.session['answer_list'] = answer_list
 
             return redirect('reviewer:case_finished', pk=pk, area=area) # should redirect to finished
 
@@ -436,22 +438,55 @@ def case_finished(request, pk, area):
     else: #area == "or":
         case = get_object_or_404(Case_ZR, pk=pk) #Case_OR
 
-    answer_string = request.session['answer_string']
+    # finished-template needs the original case-instance, so it shows the actual solutions and NOT the answers from the user
     context = {'case': case}
-    if str(answer_string) == str(case.solution):
+# get the answers from the cookie
+    answer_string = request.session['answer_string']
+    answer_list = request.session['answer_list']
+
+    #if str(answer_string) == str(case.solution):
+
+    # comparsion of the answer_list with the solution,
+    # with model_to_dict the intance is made into a dictionary
+    wrong_answer_list = []
+    from django.forms.models import model_to_dict
+    exclude_list = ["id", "title", "category", "text", "explanation", "public", "owner", "solution"]
+    case_dict = model_to_dict(case, exclude=exclude_list)
+    solution_list = []
+    for key, value in case_dict.items():
+        if key in answer_list and value == False:
+            wrong_answer_list.append(str(key))
+        elif key not in answer_list and value == True:
+            wrong_answer_list.append(str(key))
+        else:
+            pass
+
+
+    # passes a Boolean(correct) to the template, so it can say "right!" or "wrong!"
+    if not wrong_answer_list:
         context['correct'] = True
     else:
         context['correct'] = False
     context['answerstr'] = answer_string
 
-    # compares answer and solution strings and outputs the indices of the not-equal letters in a list
-    x = answer_string
-    y = case.solution
-    wrong = [i for i in range(len(x)) if x[i] != y[i]]
-    # give wrong answers to template to mark them as such  (they are in the template as wrong0, wrong1, wrong2, but only the ones which are truly wrong, so only check for existance)
-    for number in wrong:
-        name = "wrong" + str(number)
-        context[name] = True
+    # just to test in template, if answers and solutions are actually passed in lists.
+    wronga = ""
+    for a in wrong_answer_list:
+        wronga = wronga + str(a)
+    context['wronga'] = wronga
+    wrongb = ""
+    for a in answer_list:
+        wrongb = wrongb + str(a)
+    context['wrongb'] = wrongb
+
+    #takes wrong answers and gives them to the template, so it can display them in red. Each is a Boolean with the name wrongXXXX
+    mod_wrong_answer_list = []
+    for value in wrong_answer_list:
+        mod_wrong_answer_list.append('wrong' + value)
+    for a in mod_wrong_answer_list:
+        context[a] = True
+
+
 
     if area == "zr":
         form = CheckForm_ZR(instance=case)

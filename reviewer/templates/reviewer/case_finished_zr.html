@@ -15,7 +15,8 @@ Büffeln
 <h6>titel: {{ case.title }}</h6>
 <p>text: {{ case.text }}</p>
 
-<h4> Lösung: </h4>
+<h4> Lösung: falsche antworten{{ wronga }}
+geantwortet:{{ wrongb }}</h4>
 
 <form method="POST" class="case-form">{% csrf_token %}
 
@@ -51,7 +52,7 @@ Büffeln
                         </button>
                       </div>
                       </div>
-      <div class="collapse {% if case.kv or case.kp %} show {% endif %}" id="collapseKV">
+      <div class="collapse {% if case.kv or case.kp  %} show {% endif %}" id="collapseKV">
                                     <div class="row">
                                         <div class="col-3 text-left">
                                         </div>
@@ -72,9 +73,9 @@ Büffeln
 
 
                                                   <div class="col text-left">
-                                                    <p {% if wrong0 %} class="wrong"{% endif %}>Vertragsschluss {{ form.kv }}</p>
-                                                    <p  {% if wrong2 %} class="wrong"{% endif %}>Mangel {{ form.mangel }}</p>
-                                                    <p {% if wrong4 %} class="wrong"{% endif %}>Gefahrübergang {{ form.gefahruebergang }}</p>
+                                                    <p {% if wrong0 or wrongkv %} class="wrong"{% endif %}>Vertragsschluss {{ form.kv }}</p>
+                                                    <p  {% if wrong2 or wrongmangel %} class="wrong"{% endif %}>Mangel {{ form.mangel }}</p>
+                                                    <p {% if wrong4 or wronggefahruebergang %} class="wrong"{% endif %}>Gefahrübergang {{ form.gefahruebergang }}</p>
                                                     </div>
 
                                                   <div class="col text-left">
