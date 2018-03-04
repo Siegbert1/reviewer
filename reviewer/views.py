@@ -406,9 +406,9 @@ def case_reviewer(request, pk, area):
                 form = CheckForm_ZR(request.POST, instance=case)
             if form.is_valid():
                 form.process()
-                #string = form.cleaned_data['answer_string']
+
                 answer_list = form.cleaned_data['answer_list']
-                #request.session['answer_string'] = string
+                
                 request.session['answer_list'] = answer_list
 
             return redirect('reviewer:case_finished', pk=pk, area=area) # should redirect to finished
@@ -441,13 +441,9 @@ def case_finished(request, pk, area):
     # finished-template needs the original case-instance, so it shows the actual solutions and NOT the answers from the user
     context = {'case': case}
 # get the answers from the cookie
-    answer_string = request.session['answer_string']
+
     answer_list = request.session['answer_list']
 
-    #if str(answer_string) == str(case.solution):
-
-    # comparsion of the answer_list with the solution,
-    # with model_to_dict the intance is made into a dictionary
     wrong_answer_list = []
     from django.forms.models import model_to_dict
     exclude_list = ["id", "title", "category", "text", "explanation", "public", "owner", "solution"]
@@ -467,7 +463,7 @@ def case_finished(request, pk, area):
         context['correct'] = True
     else:
         context['correct'] = False
-    context['answerstr'] = answer_string
+
 
     # just to test in template, if answers and solutions are actually passed in lists.
     wronga = ""
